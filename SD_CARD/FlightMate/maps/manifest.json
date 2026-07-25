@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "name": "OSM base map",
+  "tileSize": 256,
+  "format": "png",
+  "scheme": "xyz",
+  "minZoom": 1,
+  "maxZoom": 9,
+  "attribution": "© OpenStreetMap contributors"
+}
