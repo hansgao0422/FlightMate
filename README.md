@@ -1,5 +1,10 @@
 # FlightMate（飞行伴侣）
 
+<img width="1200" height="420" alt="hero" src="https://github.com/user-attachments/assets/bb38b6de-b2b9-4cbe-9a4b-8c926fc98f7d" />
+
+
+
+
 FlightMate 是一款面向 **LilyGo T-LoRa Pager V1.0** 的便携式飞行信息工具。它将附近机场、METAR 气象报文、GNSS 定位、离线地图和飞行日志集中在一台设备上，适合飞行前信息查看与旅途中辅助记录。
 
 > FlightMate 仅用于信息参考，不可替代经认证的航空导航设备、官方气象资料或飞行程序。
