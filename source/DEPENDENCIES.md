@@ -1,4 +1,4 @@
-# FlightMate 1.07 build baseline
+# FlightMate 1.08 build baseline
 
 - LilyGo T-LoRa Pager V1.0 / ESP32-S3
 - Arduino CLI 1.5.1

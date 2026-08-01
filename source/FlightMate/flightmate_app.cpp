@@ -25,7 +25,7 @@
 namespace {
 
 constexpr char APP_NAME[] = "FlightMate";
-constexpr char APP_VERSION[] = "1.07";
+constexpr char APP_VERSION[] = "1.08";
 constexpr uint16_t SCREEN_W = 480;
 constexpr uint16_t SCREEN_H = 222;
 constexpr uint16_t TOP_H = 24;
@@ -34,7 +34,8 @@ constexpr uint16_t CONTENT_Y = TOP_H;
 constexpr uint16_t CONTENT_H = SCREEN_H - TOP_H - BOTTOM_H;
 constexpr uint8_t MAP_MIN_ZOOM = 1;
 constexpr uint8_t MAP_MAX_ZOOM = 9;
-constexpr uint16_t MAP_W = 340;
+// The flight page reserves the right 180 px for live navigation data.
+constexpr uint16_t MAP_W = 300;
 constexpr uint16_t MAP_H = CONTENT_H;
 constexpr uint8_t TILE_CACHE_SIZE = 6;
 constexpr uint8_t KEY_QUEUE_SIZE = 24;
@@ -1321,14 +1322,28 @@ void drawFlight()
     }
     canvas.fillRect(MAP_W, CONTENT_Y, SCREEN_W - MAP_W, CONTENT_H, C_PANEL);
     canvas.drawFastVLine(MAP_W, CONTENT_Y, CONTENT_H, C_GRID);
-    drawText(gps.valid ? "GNSS FIX" : (gps.hardwareReady ? "GNSS SEARCH" : "GNSS OFF"),
-             352, 34, gps.valid ? C_PRIMARY : C_WARNING);
-    drawText(gps.valid ? String(gps.speedKmh, 1) : "---", 351, 57, C_TEXT, 2);
-    drawText("KM/H", 421, 65, C_MUTED);
-    drawText(gps.valid ? String(gps.altitudeM, 0) : "---", 351, 88, C_ACCENT, 2);
-    drawText("GPS ALT M", 351, 111, C_MUTED);
+    const int16_t dataX = MAP_W + 10;
+    const String gpsStatus = gps.valid ? "GNSS FIX" : (gps.hardwareReady ? "GNSS SEARCH" : "GNSS OFF");
+    const String speedText = gps.valid ? String(gps.speedKmh, 1) : "---";
+    const String altitudeText = gps.valid ? String(gps.altitudeM, 0) : "---";
+    const String headingText = gps.valid ? String(gps.courseDeg, 0) : "---";
+    const String latitudeText = gps.valid ? String(gps.latitude, 4) : "---.----";
+    const String longitudeText = gps.valid ? String(gps.longitude, 4) : "---.----";
+    drawText(gpsStatus, dataX, 31, gps.valid ? C_PRIMARY : C_WARNING);
+    drawText("UTC " + utcClockText(), 404, 31, C_PRIMARY);
+    drawText("SPD", dataX, 50, C_MUTED);
+    drawText(speedText, dataX + 35, 44, C_TEXT, 2);
+    drawText("KM/H", 419, 52, C_MUTED);
+    drawText("ALT", dataX, 78, C_MUTED);
+    drawText(altitudeText, dataX + 35, 72, C_ACCENT, 2);
+    drawText("M", 451, 80, C_MUTED);
+    drawText("HDG", dataX, 106, C_MUTED);
+    drawText(headingText, dataX + 35, 100, C_PRIMARY, 2);
+    drawText("DEG", 425, 108, C_MUTED);
+    drawText("LAT " + latitudeText, dataX, 132, C_TEXT);
+    drawText("LON " + longitudeText, dataX, 146, C_TEXT);
     drawText("SAT " + String(gps.satellites) + "  HDOP " +
-             (gps.hdop > 0 ? String(gps.hdop, 1) : String("--")), 351, 134, C_TEXT);
+             (gps.hdop > 0 ? String(gps.hdop, 1) : String("--")), dataX, 161, C_TEXT);
     const bool hasTileStatus = mapState.tileStatus[0] != '\0';
     const String mapStatus = hasTileStatus
                                  ? String(mapState.tileStatus)
@@ -1336,7 +1351,7 @@ void drawFlight()
                                                            : String(mapState.manifestName));
     const bool mapStatusError = hasTileStatus ? mapState.tileStatusError : !mapState.manifestValid;
     drawText("Z" + String(mapState.zoom) + "  " + clippedText(mapStatus, 17),
-             351, 157, mapStatusError ? C_DANGER : C_MUTED);
+             dataX, 178, mapStatusError ? C_DANGER : C_MUTED);
     drawText("(c) OSM contributors", 8, 183, C_BLACK);
     drawChrome("WASD Pan  Q/E Zoom  C Center  H Home  L Display");
 }

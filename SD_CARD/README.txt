@@ -1,4 +1,4 @@
-FlightMate 1.07 可直接使用 SD 卡中已有的 TrailMate 地图瓦片，无需移动文件。
+FlightMate 1.08 可直接使用 SD 卡中已有的 TrailMate 地图瓦片，无需移动文件。
 
 TrailMate 目录：
   /maps/base/osm/{z}/{x}/{y}.png
