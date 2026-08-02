@@ -1,4 +1,4 @@
-# FlightMate
+# FlightMate飞行伴侣
 
 <img width="1200" height="420" alt="hero" src="https://github.com/user-attachments/assets/ed4aefce-e0be-4f93-a3bc-772fb138a715" />
 
